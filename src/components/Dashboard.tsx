@@ -6,6 +6,7 @@ import { progressKey, type Character, type Task, type TaskProgress } from '../li
 import CharacterManager from './CharacterManager'
 import CustomTaskForm, { type NewTask } from './CustomTaskForm'
 import TaskSection from './TaskSection'
+import ThemeToggle from './ThemeToggle'
 
 const SELECTED_KEY = 'aion2.selectedCharacter'
 
@@ -129,23 +130,24 @@ export default function Dashboard({ client, session }: { client: SupabaseClient;
   return (
     <div className="mx-auto max-w-3xl px-4 pb-16">
       <header className="flex items-center justify-between py-4">
-        <h1 className="text-xl font-bold text-amber-400">AION2 Clan Checklist</h1>
+        <h1 className="text-xl font-bold text-brand">AION2 Clan Checklist</h1>
         <div className="flex items-center gap-3 text-sm">
           {meta.avatar_url && <img src={meta.avatar_url} alt="" className="h-7 w-7 rounded-full" />}
-          <span className="hidden text-slate-300 sm:inline">{meta.full_name ?? meta.name}</span>
-          <button onClick={() => client.auth.signOut()} className="text-slate-400 hover:text-slate-200">Sign out</button>
+          <span className="hidden text-fg-2 sm:inline">{meta.full_name ?? meta.name}</span>
+          <ThemeToggle />
+          <button onClick={() => client.auth.signOut()} className="text-muted hover:text-fg">Sign out</button>
         </div>
       </header>
 
       {error && (
-        <div className="mb-3 flex justify-between rounded-lg border border-red-900 bg-red-950/50 p-3 text-sm text-red-300">
+        <div className="mb-3 flex justify-between rounded-lg border border-danger-line bg-danger-bg p-3 text-sm text-danger-fg">
           <span>{error}</span>
           <button onClick={() => setError(null)}>✕</button>
         </div>
       )}
 
       {loading ? (
-        <p className="text-slate-400">Loading…</p>
+        <p className="text-muted">Loading…</p>
       ) : (
         <>
           <nav className="flex flex-wrap items-center gap-2">
@@ -153,15 +155,15 @@ export default function Dashboard({ client, session }: { client: SupabaseClient;
               <button
                 key={c.id}
                 onClick={() => selectCharacter(c.id)}
-                className={`rounded-full px-3 py-1 text-sm ${c.id === selected?.id ? 'bg-amber-600 font-semibold' : 'bg-slate-800 hover:bg-slate-700'}`}
+                className={`rounded-full px-3 py-1 text-sm ${c.id === selected?.id ? 'bg-amber-600 text-white font-semibold' : 'bg-raised hover:bg-raised-hover'}`}
               >
                 {c.name}
               </button>
             ))}
-            <button onClick={() => setPanel(panel === 'characters' ? null : 'characters')} className="rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-300 hover:bg-slate-800">
+            <button onClick={() => setPanel(panel === 'characters' ? null : 'characters')} className="rounded-full border border-line-strong px-3 py-1 text-sm text-fg-2 hover:bg-raised">
               {characters.length ? 'Manage characters' : '+ Add your first character'}
             </button>
-            <button onClick={() => setPanel(panel === 'task' ? null : 'task')} className="ml-auto text-sm text-slate-400 hover:text-slate-200">
+            <button onClick={() => setPanel(panel === 'task' ? null : 'task')} className="ml-auto text-sm text-muted hover:text-fg">
               + Custom task
             </button>
           </nav>

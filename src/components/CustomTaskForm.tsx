@@ -11,7 +11,7 @@ export interface NewTask {
   note_reset: string | null
 }
 
-const input = 'rounded-md border border-slate-700 bg-slate-950 px-2 py-1.5 text-sm'
+const input = 'rounded-md border border-line-strong bg-page px-2 py-1.5 text-sm'
 
 export default function CustomTaskForm({ onAdd, onClose }: { onAdd: (t: NewTask) => Promise<void>; onClose: () => void }) {
   const [t, setT] = useState<NewTask>({ name: '', cadence: 'daily', scope: 'character', max_entries: 1, note_todo: '', note_reset: '' })
@@ -24,7 +24,7 @@ export default function CustomTaskForm({ onAdd, onClose }: { onAdd: (t: NewTask)
   }
 
   return (
-    <form onSubmit={submit} className="mt-4 grid gap-2 rounded-xl border border-slate-800 bg-slate-900 p-4 sm:grid-cols-2">
+    <form onSubmit={submit} className="mt-4 grid gap-2 rounded-xl border border-line bg-card p-4 sm:grid-cols-2">
       <h2 className="font-semibold sm:col-span-2">New custom task</h2>
       <input value={t.name} onChange={(e) => setT({ ...t, name: e.target.value })} placeholder="Task name" maxLength={60} className={input} />
       <div className="flex gap-2">
@@ -45,8 +45,8 @@ export default function CustomTaskForm({ onAdd, onClose }: { onAdd: (t: NewTask)
       <input value={t.note_todo ?? ''} onChange={(e) => setT({ ...t, note_todo: e.target.value })} placeholder="What to do" className={input} />
       <input value={t.note_reset ?? ''} onChange={(e) => setT({ ...t, note_reset: e.target.value })} placeholder="Reset / entries note" className={input} />
       <div className="flex justify-end gap-2 sm:col-span-2">
-        <button type="button" onClick={onClose} className="px-3 py-1.5 text-sm text-slate-400 hover:text-slate-200">Cancel</button>
-        <button className="rounded-md bg-amber-600 px-3 py-1.5 text-sm font-semibold hover:bg-amber-500">Add task</button>
+        <button type="button" onClick={onClose} className="px-3 py-1.5 text-sm text-muted hover:text-fg">Cancel</button>
+        <button className="rounded-md bg-amber-600 text-white px-3 py-1.5 text-sm font-semibold hover:bg-amber-500">Add task</button>
       </div>
     </form>
   )

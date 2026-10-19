@@ -11,7 +11,7 @@ interface Props {
   onClose: () => void
 }
 
-const input = 'rounded-md border border-slate-700 bg-slate-950 px-2 py-1.5 text-sm'
+const input = 'rounded-md border border-line-strong bg-page px-2 py-1.5 text-sm'
 
 export default function CharacterManager({ characters, onAdd, onRename, onDelete, onClose }: Props) {
   const [name, setName] = useState('')
@@ -26,10 +26,10 @@ export default function CharacterManager({ characters, onAdd, onRename, onDelete
   }
 
   return (
-    <div className="mt-4 rounded-xl border border-slate-800 bg-slate-900 p-4">
+    <div className="mt-4 rounded-xl border border-line bg-card p-4">
       <div className="flex items-center justify-between">
         <h2 className="font-semibold">Characters</h2>
-        <button onClick={onClose} className="text-sm text-slate-400 hover:text-slate-200">done</button>
+        <button onClick={onClose} className="text-sm text-muted hover:text-fg">done</button>
       </div>
 
       <ul className="mt-3 space-y-2">
@@ -41,10 +41,10 @@ export default function CharacterManager({ characters, onAdd, onRename, onDelete
               className={`${input} flex-1`}
               aria-label="Character name"
             />
-            <span className="w-32 truncate text-sm text-slate-400">{[c.class, c.server].filter(Boolean).join(' · ')}</span>
+            <span className="w-32 truncate text-sm text-muted">{[c.class, c.server].filter(Boolean).join(' · ')}</span>
             <button
               onClick={() => confirm(`Delete ${c.name} and its progress?`) && onDelete(c)}
-              className="text-sm text-slate-500 hover:text-red-400"
+              className="text-sm text-faint hover:text-danger-fg"
             >
               delete
             </button>
@@ -59,7 +59,7 @@ export default function CharacterManager({ characters, onAdd, onRename, onDelete
           <option value="">Class</option>
           {CLASSES.map((c) => <option key={c}>{c}</option>)}
         </select>
-        <button className="rounded-md bg-amber-600 px-3 py-1.5 text-sm font-semibold hover:bg-amber-500">Add</button>
+        <button className="rounded-md bg-amber-600 text-white px-3 py-1.5 text-sm font-semibold hover:bg-amber-500">Add</button>
       </form>
     </div>
   )

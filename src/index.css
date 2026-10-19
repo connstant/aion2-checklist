@@ -1,5 +1,79 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme colors. Components use these names (bg-card, text-muted, ...) instead of raw palette colors. */
+:root {
+  color-scheme: light;
+  --page: #f8fafc;
+  --card: #ffffff;
+  --raised: #e2e8f0;
+  --raised-hover: #cbd5e1;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --fg: #0f172a;
+  --fg-2: #334155;
+  --muted: #64748b;
+  --faint: #94a3b8;
+  --brand: #b45309;
+  --note: #92400e;
+  --done-bg: #ecfdf5;
+  --done-line: #a7f3d0;
+  --done-fg: #047857;
+  --danger-bg: #fef2f2;
+  --danger-line: #fecaca;
+  --danger-fg: #b91c1c;
+  --tag-bg: #e0e7ff;
+  --tag-fg: #4338ca;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --page: #020617;
+  --card: #0f172a;
+  --raised: #1e293b;
+  --raised-hover: #334155;
+  --line: #1e293b;
+  --line-strong: #334155;
+  --fg: #f1f5f9;
+  --fg-2: #cbd5e1;
+  --muted: #94a3b8;
+  --faint: #64748b;
+  --brand: #fbbf24;
+  --note: rgb(252 211 77 / 0.8);
+  --done-bg: rgb(2 44 34 / 0.3);
+  --done-line: #064e3b;
+  --done-fg: #34d399;
+  --danger-bg: rgb(69 10 10 / 0.5);
+  --danger-line: #7f1d1d;
+  --danger-fg: #fca5a5;
+  --tag-bg: #1e1b4b;
+  --tag-fg: #a5b4fc;
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-card: var(--card);
+  --color-raised: var(--raised);
+  --color-raised-hover: var(--raised-hover);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-brand: var(--brand);
+  --color-note: var(--note);
+  --color-done-bg: var(--done-bg);
+  --color-done-line: var(--done-line);
+  --color-done-fg: var(--done-fg);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-line: var(--danger-line);
+  --color-danger-fg: var(--danger-fg);
+  --color-tag-bg: var(--tag-bg);
+  --color-tag-fg: var(--tag-fg);
+}
+
 body {
-  @apply bg-slate-950 text-slate-100 antialiased;
+  @apply bg-page text-fg antialiased;
 }

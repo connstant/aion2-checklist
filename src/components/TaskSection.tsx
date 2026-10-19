@@ -20,10 +20,10 @@ export default function TaskSection({ title, tasks, now, cadence, getCount, setC
     <section className="mt-6">
       <div className="mb-2 flex items-baseline justify-between">
         <h2 className="text-lg font-semibold">
-          {title} <span className="text-sm font-normal text-slate-400">{doneCount}/{tasks.length}</span>
+          {title} <span className="text-sm font-normal text-muted">{doneCount}/{tasks.length}</span>
         </h2>
         {cadence && (
-          <span className="text-sm text-slate-400">
+          <span className="text-sm text-muted">
             resets in {formatCountdown(nextReset(cadence, now).getTime() - now.getTime())}
           </span>
         )}
