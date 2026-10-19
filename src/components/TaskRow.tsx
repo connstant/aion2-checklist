@@ -16,7 +16,9 @@ const TIER_COLORS: Record<string, string> = {
   purple: 'bg-purple-500',
   blue: 'bg-sky-500',
   green: 'bg-emerald-500',
-  white: 'bg-slate-400',
+  white: 'bg-slate-200 ring-1 ring-slate-400',
+  gray: 'bg-slate-400',
+  grey: 'bg-slate-400',
   red: 'bg-red-500',
 }
 const tierColor = (tier: Tier) => TIER_COLORS[(tier.color ?? tier.key).toLowerCase()] ?? 'bg-slate-400'

@@ -5,9 +5,9 @@
 
 insert into public.tasks (name, cadence, scope, max_entries, category, sort_order, note_todo, note_reset) values
 -- Daily ----------------------------------------------------------------------
-('Mission Journal', 'daily', 'character', 5, 'Missions', 10,
-  'Complete the daily duty/mission journal quests.',
-  'Resets daily 07:00 UTC · 5 per day'),
+('Duties', 'daily', 'character', 5, 'Missions', 10,
+  'Complete your daily Duties.',
+  'Resets daily 07:00 UTC · 5 per day per character'),
 ('Nightmare', 'daily', 'character', 2, 'Dungeons', 20,
   'Run Nightmare. Unused attempts carry over, so it''s okay to skip a day.',
   '+2 attempts daily 07:00 UTC · stacks up to about a week'),
@@ -47,9 +47,9 @@ insert into public.tasks (name, cadence, scope, max_entries, category, sort_orde
   'Use your account-wide Odyle Energy crafts.',
   'Resets Wed 07:00 UTC · 4 per account per week');
 
--- Tiered task: per-rarity limits. PLACEHOLDER counts; edit the tiers JSON to match the game.
+-- Tiered task: per-rarity limits (edit the tiers JSON if the game changes).
 insert into public.tasks (name, cadence, scope, max_entries, category, sort_order, note_todo, note_reset, tiers) values
-('Abyss Command Duties', 'weekly', 'character', 5, 'Missions', 125,
-  'Complete the weekly Abyss Command Duty quests.',
-  'Resets Wed 07:00 UTC · separate limit per rarity',
-  '[{"key": "gold", "label": "Gold", "max": 2}, {"key": "blue", "label": "Blue", "max": 3}]');
+('Abyss Command Duties', 'weekly', 'account', 20, 'Missions', 125,
+  'Complete Abyss Command Duties. Rewards: the first item is guaranteed (100%); extra rewards roll at decreasing odds (50% / 33% / 25% / 10%).',
+  'Resets Wed 07:00 UTC · 5 per rarity per server, shared by all characters',
+  '[{"key": "gold", "label": "Gold", "max": 5}, {"key": "blue", "label": "Blue", "max": 5}, {"key": "green", "label": "Green", "max": 5}, {"key": "gray", "label": "Gray", "max": 5}]');
