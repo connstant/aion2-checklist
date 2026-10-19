@@ -1,5 +1,5 @@
 import { formatCountdown, nextReset, type Cadence } from '../lib/resets'
-import type { Task } from '../lib/types'
+import { taskMax, type Task, type TierCounts } from '../lib/types'
 import TaskRow from './TaskRow'
 
 interface Props {
@@ -8,13 +8,15 @@ interface Props {
   now: Date
   cadence?: Cadence // shows a reset countdown when set
   getCount: (task: Task) => number
+  getTierCounts: (task: Task) => TierCounts
   setCount: (task: Task, count: number) => void
+  setTierCount: (task: Task, tierKey: string, count: number) => void
   deleteTask: (task: Task) => void
 }
 
-export default function TaskSection({ title, tasks, now, cadence, getCount, setCount, deleteTask }: Props) {
+export default function TaskSection({ title, tasks, now, cadence, getCount, getTierCounts, setCount, setTierCount, deleteTask }: Props) {
   if (tasks.length === 0) return null
-  const doneCount = tasks.filter((t) => getCount(t) >= t.max_entries).length
+  const doneCount = tasks.filter((t) => getCount(t) >= taskMax(t)).length
 
   return (
     <section className="mt-6">
@@ -34,7 +36,9 @@ export default function TaskSection({ title, tasks, now, cadence, getCount, setC
             key={task.id}
             task={task}
             count={getCount(task)}
-            onChange={(c) => setCount(task, Math.max(0, Math.min(task.max_entries, c)))}
+            tierCounts={getTierCounts(task)}
+            onChange={(c) => setCount(task, Math.max(0, Math.min(taskMax(task), c)))}
+            onTierChange={(key, c) => setTierCount(task, key, c)}
             onDelete={task.owner_id ? () => deleteTask(task) : undefined}
           />
         ))}

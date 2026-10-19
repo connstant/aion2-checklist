@@ -2,7 +2,7 @@ import type { Session, SupabaseClient } from '@supabase/supabase-js'
 import { useCallback, useEffect, useState } from 'react'
 import { useNow } from '../hooks/useNow'
 import { isInCurrentPeriod } from '../lib/resets'
-import { progressKey, type Character, type Task, type TaskProgress } from '../lib/types'
+import { progressKey, tierTotal, type Character, type Task, type TaskProgress, type TierCounts } from '../lib/types'
 import CharacterManager from './CharacterManager'
 import CustomTaskForm, { type NewTask } from './CustomTaskForm'
 import TaskSection from './TaskSection'
@@ -51,23 +51,38 @@ export default function Dashboard({ client, session }: { client: SupabaseClient;
   }
 
   // A row only counts if it was updated since the last reset; otherwise it's back to 0.
-  function getCount(task: Task): number {
+  function currentRow(task: Task): TaskProgress | null {
     const row = progress[progressKey(charIdFor(task), task.id)]
-    return row && isInCurrentPeriod(row.updated_at, task.cadence, now) ? row.count : 0
+    return row && isInCurrentPeriod(row.updated_at, task.cadence, now) ? row : null
   }
 
-  async function setCount(task: Task, count: number) {
+  function getTierCounts(task: Task): TierCounts {
+    return currentRow(task)?.tier_counts ?? {}
+  }
+
+  function getCount(task: Task): number {
+    return task.tiers?.length ? tierTotal(task.tiers, getTierCounts(task)) : (currentRow(task)?.count ?? 0)
+  }
+
+  function setTierCount(task: Task, tierKey: string, n: number) {
+    const tier = task.tiers?.find((t) => t.key === tierKey)
+    if (!tier || !task.tiers) return
+    const tierCounts = { ...getTierCounts(task), [tierKey]: Math.max(0, Math.min(tier.max, n)) }
+    return setCount(task, tierTotal(task.tiers, tierCounts), tierCounts)
+  }
+
+  async function setCount(task: Task, count: number, tierCounts: TierCounts | null = null) {
     const characterId = charIdFor(task)
     const key = progressKey(characterId, task.id)
     const prev = progress[key]
     // optimistic update; the server sets the real updated_at
     setProgress((p) => ({
       ...p,
-      [key]: { id: prev?.id ?? 'pending', user_id: userId, character_id: characterId, task_id: task.id, count, updated_at: new Date().toISOString() },
+      [key]: { id: prev?.id ?? 'pending', user_id: userId, character_id: characterId, task_id: task.id, count, tier_counts: tierCounts, updated_at: new Date().toISOString() },
     }))
     const { data, error } = await client
       .from('task_progress')
-      .upsert({ user_id: userId, character_id: characterId, task_id: task.id, count }, { onConflict: 'user_id,character_id,task_id' })
+      .upsert({ user_id: userId, character_id: characterId, task_id: task.id, count, tier_counts: tierCounts }, { onConflict: 'user_id,character_id,task_id' })
       .select()
       .single()
     if (error) {
@@ -124,7 +139,7 @@ export default function Dashboard({ client, session }: { client: SupabaseClient;
   }
 
   const characterTasks = tasks.filter((t) => t.scope === 'character')
-  const sectionProps = { now, getCount, setCount, deleteTask }
+  const sectionProps = { now, getCount, getTierCounts, setCount, setTierCount, deleteTask }
   const meta = session.user.user_metadata
 
   return (

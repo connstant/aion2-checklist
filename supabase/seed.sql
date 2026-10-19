@@ -28,12 +28,9 @@ insert into public.tasks (name, cadence, scope, max_entries, category, sort_orde
 ('Daily Dungeon', 'weekly', 'character', 14, 'Dungeons', 110,
   'Current daily dungeon: Unknown Fissure. Pace about 2 runs a day.',
   'Refills Wed 07:00 UTC · 14 entries · unused entries are lost'),
-('Command Duties', 'weekly', 'character', 14, 'Missions', 120,
+('Command Duties', 'weekly', 'account', 12, 'Missions', 120,
   'Complete the weekly Command Duty quests.',
-  'Resets Wed 07:00 UTC · 14 per week'),
-('Abyss Command Duties', 'weekly', 'character', 3, 'Missions', 125,
-  'Complete the weekly Abyss Command Duty quests.',
-  'Resets Wed 07:00 UTC · 3 per week'),
+  'Resets Wed 07:00 UTC · 12 per server, shared by all characters'),
 ('Subjugation', 'weekly', 'character', 3, 'Field', 130,
   'Use your Subjugation tickets.',
   'Refills Wed 07:00 UTC · 3 tickets · unused tickets are lost'),
@@ -49,3 +46,10 @@ insert into public.tasks (name, cadence, scope, max_entries, category, sort_orde
 ('Odyle Energy Crafts', 'weekly', 'account', 4, 'Crafting', 170,
   'Use your account-wide Odyle Energy crafts.',
   'Resets Wed 07:00 UTC · 4 per account per week');
+
+-- Tiered task: per-rarity limits. PLACEHOLDER counts; edit the tiers JSON to match the game.
+insert into public.tasks (name, cadence, scope, max_entries, category, sort_order, note_todo, note_reset, tiers) values
+('Abyss Command Duties', 'weekly', 'character', 5, 'Missions', 125,
+  'Complete the weekly Abyss Command Duty quests.',
+  'Resets Wed 07:00 UTC · separate limit per rarity',
+  '[{"key": "gold", "label": "Gold", "max": 2}, {"key": "blue", "label": "Blue", "max": 3}]');
