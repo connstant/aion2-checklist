@@ -4,6 +4,7 @@
 1. Create a project at https://supabase.com (free tier is fine).
 2. Open **SQL Editor** and run, in order:
    - `supabase/migrations/20261019000000_init.sql` (tables, security rules)
+   - `supabase/migrations/20261020000000_grants.sql` (gives signed-in users table access)
    - `supabase/seed.sql` (default daily/weekly tasks; run once)
    - Or with the Supabase CLI: `supabase link --project-ref <ref>` then `supabase db push`, and run the seed in the SQL editor.
 3. **Project Settings → API**: copy the Project URL and the `anon` public key.
