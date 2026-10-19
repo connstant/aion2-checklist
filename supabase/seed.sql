@@ -31,21 +31,21 @@ insert into public.tasks (name, cadence, scope, max_entries, category, sort_orde
 ('Command Duties', 'weekly', 'account', 12, 'Missions', 120,
   'Complete the weekly Command Duty quests. Rewards: the first item is guaranteed (100%); extra rewards roll at decreasing odds (50% / 33% / 25% / 10%).',
   'Resets Wed 07:00 UTC · 12 per server, shared by all characters'),
-('Subjugation', 'weekly', 'character', 3, 'Field', 130,
-  'Use your Subjugation tickets.',
-  'Refills Wed 07:00 UTC · 3 tickets · unused tickets are lost'),
 ('Ascension Trial', 'weekly', 'character', 3, 'Dungeons', 140,
   'Run Ascension Trial.',
   'Refills Wed 07:00 UTC · 3 entries · unused entries are lost'),
-('Raid', 'weekly', 'character', 1, 'Raids', 150,
-  'Clear your weekly raid(s) with the clan.',
-  'Refills Wed 07:00 UTC · unused attempts are lost'),
 ('Odyle Energy Crafts', 'weekly', 'character', 16, 'Crafting', 160,
   'Use your Odyle Energy crafts on this character.',
   'Resets Wed 07:00 UTC · 16 per character per week'),
 ('Odyle Energy Crafts', 'weekly', 'account', 4, 'Crafting', 170,
   'Use your account-wide Odyle Energy crafts.',
-  'Resets Wed 07:00 UTC · 4 per account per week');
+  'Resets Wed 07:00 UTC · 4 per account per week'),
+('Subjugation', 'weekly', 'character', 3, 'Field', 180,
+  'Use your Subjugation tickets.',
+  'Refills Wed 07:00 UTC · 3 tickets · unused tickets are lost'),
+('Raid', 'weekly', 'character', 1, 'Raids', 190,
+  'Clear your weekly raid(s) with the clan.',
+  'Refills Wed 07:00 UTC · unused attempts are lost');
 
 -- Tiered task: per-rarity limits (edit the tiers JSON if the game changes).
 insert into public.tasks (name, cadence, scope, max_entries, category, sort_order, note_todo, note_reset, tiers) values
