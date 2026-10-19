@@ -6,7 +6,7 @@
 insert into public.tasks (name, cadence, scope, max_entries, category, sort_order, note_todo, note_reset) values
 -- Daily ----------------------------------------------------------------------
 ('Duties', 'daily', 'character', 5, 'Missions', 10,
-  'Complete your daily Duties.',
+  'Complete your daily Duties. Rewards: the first item is guaranteed (100%); extra rewards roll at decreasing odds (50% / 33% / 25% / 10%).',
   'Resets daily 07:00 UTC · 5 per day per character'),
 ('Nightmare', 'daily', 'character', 2, 'Dungeons', 20,
   'Run Nightmare. Unused attempts carry over, so it''s okay to skip a day.',
@@ -29,7 +29,7 @@ insert into public.tasks (name, cadence, scope, max_entries, category, sort_orde
   'Current daily dungeon: Unknown Fissure. Pace about 2 runs a day.',
   'Refills Wed 07:00 UTC · 14 entries · unused entries are lost'),
 ('Command Duties', 'weekly', 'account', 12, 'Missions', 120,
-  'Complete the weekly Command Duty quests.',
+  'Complete the weekly Command Duty quests. Rewards: the first item is guaranteed (100%); extra rewards roll at decreasing odds (50% / 33% / 25% / 10%).',
   'Resets Wed 07:00 UTC · 12 per server, shared by all characters'),
 ('Subjugation', 'weekly', 'character', 3, 'Field', 130,
   'Use your Subjugation tickets.',
