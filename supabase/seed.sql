@@ -5,9 +5,9 @@
 
 insert into public.tasks (name, cadence, scope, max_entries, category, sort_order, note_todo, note_reset) values
 -- Daily ----------------------------------------------------------------------
-('Duties', 'daily', 'character', 5, 'Missions', 10,
+('Duties', 'daily', 'account', 5, 'Missions', 5,
   'Complete your daily Duties. Rewards: the first item is guaranteed (100%); extra rewards roll at decreasing odds (50% / 33% / 25% / 10%).',
-  'Resets daily 07:00 UTC · 5 per day per character'),
+  'Resets daily 07:00 UTC · 5 per day per server, shared by all characters'),
 ('Nightmare', 'daily', 'character', 2, 'Dungeons', 20,
   'Run Nightmare. Unused attempts carry over, so it''s okay to skip a day.',
   '+2 attempts daily 07:00 UTC · stacks up to about a week'),
