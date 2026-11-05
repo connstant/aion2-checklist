@@ -40,12 +40,24 @@ export default function TaskRow({ task, count, tierCounts, onChange, onTierChang
           className="mt-1 h-5 w-5 shrink-0 cursor-pointer accent-emerald-500"
           aria-label={task.name}
         />
-      ) : tiers ? (
-        <span className={`w-28 shrink-0 pt-1 text-center text-sm tabular-nums ${done ? 'text-done-fg' : 'text-muted'}`}>
-          {count}/{max}
-        </span>
       ) : (
-        <Counter label={task.name} count={count} max={max} done={done} onChange={onChange} />
+        <div className="flex w-28 shrink-0 flex-col items-center gap-1.5 self-start">
+          {tiers ? (
+            <span className={`pt-1 text-center text-sm tabular-nums ${done ? 'text-done-fg' : 'text-muted'}`}>
+              {count}/{max}
+            </span>
+          ) : (
+            <Counter label={task.name} count={count} max={max} done={done} onChange={onChange} />
+          )}
+          <button
+            onClick={onCompleteAll}
+            disabled={done}
+            className="w-full rounded bg-raised px-2 py-0.5 text-xs font-medium hover:bg-raised-hover disabled:opacity-30"
+            aria-label={`Complete all ${task.name} entries`}
+          >
+            Complete all
+          </button>
+        </div>
       )}
 
       <div className="min-w-0 flex-1">
@@ -55,24 +67,10 @@ export default function TaskRow({ task, count, tierCounts, onChange, onTierChang
             <span className="rounded bg-raised px-1.5 text-xs text-muted">{task.cadence}</span>
           )}
           {task.owner_id && <span className="rounded bg-tag-bg px-1.5 text-xs text-tag-fg">custom</span>}
-          {(!single || onDelete) && (
-            <div className="ml-auto flex shrink-0 items-center gap-3">
-              {!single && (
-                <button
-                  onClick={onCompleteAll}
-                  disabled={done}
-                  className="rounded bg-raised px-2 py-0.5 text-xs font-medium hover:bg-raised-hover disabled:opacity-30"
-                  aria-label={`Complete all ${task.name} entries`}
-                >
-                  Complete all
-                </button>
-              )}
-              {onDelete && (
-                <button onClick={onDelete} className="text-xs text-faint hover:text-danger-fg">
-                  delete
-                </button>
-              )}
-            </div>
+          {onDelete && (
+            <button onClick={onDelete} className="ml-auto text-xs text-faint hover:text-danger-fg">
+              delete
+            </button>
           )}
         </div>
         {task.note_todo && <p className="mt-0.5 text-sm text-fg-2">{task.note_todo}</p>}
