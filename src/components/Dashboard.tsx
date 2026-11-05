@@ -2,7 +2,7 @@ import type { Session, SupabaseClient } from '@supabase/supabase-js'
 import { useCallback, useEffect, useState } from 'react'
 import { useNow } from '../hooks/useNow'
 import { isInCurrentPeriod } from '../lib/resets'
-import { progressKey, tierTotal, type Character, type Task, type TaskProgress, type TierCounts } from '../lib/types'
+import { progressKey, taskMax, tierTotal, type Character, type Task, type TaskProgress, type TierCounts } from '../lib/types'
 import CharacterManager from './CharacterManager'
 import CustomTaskForm, { type NewTask } from './CustomTaskForm'
 import TaskSection from './TaskSection'
@@ -69,6 +69,15 @@ export default function Dashboard({ client, session }: { client: SupabaseClient;
     if (!tier || !task.tiers) return
     const tierCounts = { ...getTierCounts(task), [tierKey]: Math.max(0, Math.min(tier.max, n)) }
     return setCount(task, tierTotal(task.tiers, tierCounts), tierCounts)
+  }
+
+  /** Fill every entry (and every tier) of a task in one save. */
+  function completeTask(task: Task) {
+    if (task.tiers?.length) {
+      const tierCounts = Object.fromEntries(task.tiers.map((t) => [t.key, t.max]))
+      return setCount(task, taskMax(task), tierCounts)
+    }
+    return setCount(task, taskMax(task))
   }
 
   async function setCount(task: Task, count: number, tierCounts: TierCounts | null = null) {
@@ -139,7 +148,7 @@ export default function Dashboard({ client, session }: { client: SupabaseClient;
   }
 
   const characterTasks = tasks.filter((t) => t.scope === 'character')
-  const sectionProps = { now, getCount, getTierCounts, setCount, setTierCount, deleteTask }
+  const sectionProps = { now, getCount, getTierCounts, setCount, setTierCount, completeTask, deleteTask }
   const meta = session.user.user_metadata
 
   return (
