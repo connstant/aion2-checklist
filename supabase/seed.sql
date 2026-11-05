@@ -49,6 +49,9 @@ insert into public.tasks (name, cadence, scope, max_entries, category, sort_orde
 ('Subjugation', 'weekly', 'character', 3, 'Field', 180,
   'Use your Subjugation tickets.',
   'Refills Wed 07:00 UTC · 3 tickets · unused tickets are lost'),
+('Sanctuary', 'weekly', 'character', 1, 'Raids', 185,
+  'Clear Sanctuary on this character.',
+  'Resets Wed 07:00 UTC · once per character per week'),
 ('Raid', 'weekly', 'character', 1, 'Raids', 190,
   'Clear your weekly raid(s) with the clan.',
   'Refills Wed 07:00 UTC · unused attempts are lost');
