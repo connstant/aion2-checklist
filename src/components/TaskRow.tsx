@@ -6,6 +6,7 @@ interface Props {
   tierCounts: TierCounts
   onChange: (count: number) => void
   onTierChange: (tierKey: string, count: number) => void
+  onCompleteAll: () => void
   onDelete?: () => void
 }
 
@@ -23,7 +24,7 @@ const TIER_COLORS: Record<string, string> = {
 }
 const tierColor = (tier: Tier) => TIER_COLORS[(tier.color ?? tier.key).toLowerCase()] ?? 'bg-slate-400'
 
-export default function TaskRow({ task, count, tierCounts, onChange, onTierChange, onDelete }: Props) {
+export default function TaskRow({ task, count, tierCounts, onChange, onTierChange, onCompleteAll, onDelete }: Props) {
   const max = taskMax(task)
   const done = count >= max
   const tiers = task.tiers?.length ? task.tiers : null
@@ -54,10 +55,24 @@ export default function TaskRow({ task, count, tierCounts, onChange, onTierChang
             <span className="rounded bg-raised px-1.5 text-xs text-muted">{task.cadence}</span>
           )}
           {task.owner_id && <span className="rounded bg-tag-bg px-1.5 text-xs text-tag-fg">custom</span>}
-          {onDelete && (
-            <button onClick={onDelete} className="ml-auto text-xs text-faint hover:text-danger-fg">
-              delete
-            </button>
+          {(!single || onDelete) && (
+            <div className="ml-auto flex shrink-0 items-center gap-3">
+              {!single && (
+                <button
+                  onClick={onCompleteAll}
+                  disabled={done}
+                  className="rounded bg-raised px-2 py-0.5 text-xs font-medium hover:bg-raised-hover disabled:opacity-30"
+                  aria-label={`Complete all ${task.name} entries`}
+                >
+                  Complete all
+                </button>
+              )}
+              {onDelete && (
+                <button onClick={onDelete} className="text-xs text-faint hover:text-danger-fg">
+                  delete
+                </button>
+              )}
+            </div>
           )}
         </div>
         {task.note_todo && <p className="mt-0.5 text-sm text-fg-2">{task.note_todo}</p>}

@@ -11,10 +11,11 @@ interface Props {
   getTierCounts: (task: Task) => TierCounts
   setCount: (task: Task, count: number) => void
   setTierCount: (task: Task, tierKey: string, count: number) => void
+  completeTask: (task: Task) => void
   deleteTask: (task: Task) => void
 }
 
-export default function TaskSection({ title, tasks, now, cadence, getCount, getTierCounts, setCount, setTierCount, deleteTask }: Props) {
+export default function TaskSection({ title, tasks, now, cadence, getCount, getTierCounts, setCount, setTierCount, completeTask, deleteTask }: Props) {
   if (tasks.length === 0) return null
   const doneCount = tasks.filter((t) => getCount(t) >= taskMax(t)).length
 
@@ -39,6 +40,7 @@ export default function TaskSection({ title, tasks, now, cadence, getCount, getT
             tierCounts={getTierCounts(task)}
             onChange={(c) => setCount(task, Math.max(0, Math.min(taskMax(task), c)))}
             onTierChange={(key, c) => setTierCount(task, key, c)}
+            onCompleteAll={() => completeTask(task)}
             onDelete={task.owner_id ? () => deleteTask(task) : undefined}
           />
         ))}
